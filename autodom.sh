@@ -13,8 +13,9 @@ output_id=$2
 
 ###################
 
-# Get the 2nd level domain as a string
-name=`echo $1 | rev | cut -f 2 -d "." | rev`
+## Debug Flag ##
+
+_DEBUG_=true
 
 # Create all folders that will be used
 mkdir $output_id
@@ -41,6 +42,12 @@ do
 	nslookup $f >> "$nslook_output";
 	answer_found=`cat $nslook_output | grep "Name:" | wc -l`
 
+	if [ $_DEBUG_ ]; # debug hint
+	then
+		echo "nslookup for $f"
+		echo `$nslook_output`
+	fi
+
 	# Check if the subdomain resolved, if so save it
 	if [ $answer_found -gt 0 ];
 	then
@@ -50,33 +57,51 @@ do
 done;
 
 # Reformat the resolving subdomains into a useful layout.
+
+if [ $_DEBUG_ ]; # debug hint
+then
+	echo "Begin formatting the resolving subdomains into useful layouts.";
+	echo "\n#######\n"
+fi
+
 count=1
 for f in `cat $temp/resolved.txt`;
 do
+	if [ $_DEBUG_ ];
+	then
+		echo "The count is: $count"
+	fi
+
+
 	if [ $count -eq 1 ]
 	then
 		url=$f
 		count=2
+		if [ $_DEBUG_ ];
+		then
+			echo "url is: $f"
+			echo "count is: $count"
+		fi
 		pass
 	else
 		ip=$f
 		count=1
+		if [ $_DEBUG_ ];
+		then
+			echo "ip is: $f"
+			echo "count is: $count"
+		fi
 	fi
 	echo $url $ip >> $output/subdomains-resolving.txt
+
+	if [ $_DEBUG_ ]
+	then
+		echo "$url $ip"
+		echo "End of iteration."
+	fi
 done
 
 # Clean up the temporary files
 rm -r $temp
-
-# Filter out subdomains for in scope external IPs.
-while read f;
-do
-	ip=`echo $f | cut -f 2 -d " "`
-	is_inscope=`cat $2 | grep "$ip" | wc -l`
-	if [ $is_inscope -gt 0 ]
-	then
-		echo $f >> $output/subdomains-inscope.txt
-	fi
-done < $output/subdomains-resolving.txt
 
 
