@@ -82,7 +82,7 @@ do
 			echo "url is: $f"
 			echo "count is: $count"
 		fi
-		pass
+		continue
 	else
 		ip=$f
 		count=1
@@ -90,13 +90,13 @@ do
 		then
 			echo "ip is: $f"
 			echo "count is: $count"
+			echo "output line is: $url $ip"
 		fi
+		echo $url $ip >> $output/subdomains-resolving.txt
 	fi
-	echo $url $ip >> $output/subdomains-resolving.txt
 
 	if [ $_DEBUG_ ]
 	then
-		echo "$url $ip"
 		echo "End of iteration."
 	fi
 done
