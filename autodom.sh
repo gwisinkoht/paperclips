@@ -1,8 +1,8 @@
 ## Function ##
 
-This script runs nslookup against a list of subdomains and
-outputs their associated public IP addresses in a folder
-of your choice.
+# This script runs nslookup against a list of subdomains and
+# outputs their associated public IP addresses in a folder
+# of your choice.
 
 ## Parameters ##
 
@@ -45,7 +45,7 @@ do
 	if [ $_DEBUG_ ]; # debug hint
 	then
 		echo "nslookup for $f"
-		echo `$nslook_output`
+		echo "$nslook_output"
 	fi
 
 	# Check if the subdomain resolved, if so save it
