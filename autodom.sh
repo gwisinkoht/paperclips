@@ -52,13 +52,22 @@ do
 	if [ $answer_found -gt 0 ];
 	then
 		raw_resolved=`cat $nslook_output | grep -A 1 "Name:"`;
-		echo $raw_resolved | tr "\ Name:" "\nName:" | grep -v "Name:" | grep -v "Address:" >> "$temp/resolved.txt"
+		echo $raw_resolved RAWS ARE HERE
+		url=$f
+		ips=`echo $raw_resolved | tr "\ " "\n" | grep -v '[[:alpha:]]'`
+		for ip in `echo $ips`;
+		do
+			echo $url >> "$temp/resolved.txt"
+			echo $ip >> "$temp/resolved.txt"
+		done
 	fi
 done;
 
+cat $temp/resolved.txt
+
 # Reformat the resolving subdomains into a useful layout.
 
-if [ $_DEBUG_ ]; # debug hint
+if [ $_DEBUG_ = true ]; # debug hint
 then
 	echo "Begin formatting the resolving subdomains into useful layouts.";
 	echo "\n#######\n"
