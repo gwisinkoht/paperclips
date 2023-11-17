@@ -1,0 +1,8 @@
+clone link, tool name
+https://github.com/byt3bl33d3r/CrackMapExec.git, CrackMapExec
+https://github.com/ly4k/Certipy.git, Certipy
+https://github.com/fortra/impacket.git, Impacket
+https://github.com/derv82/wifite2.git, Wifite
+https://github.com/dievus/Oh365UserFinder.git, Oh365UserFinder
+https://github.com/gwisinkoht/Okta-Password-Sprayer, Okta-Password-Sprayer
+https://github.com/lgandx/Responder.git, Responder
